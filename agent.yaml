@@ -1,0 +1,6 @@
+spec_version: "0.1.0"
+name: sage-stem-explainer
+version: 0.1.0
+description: STEM concept-explanation agent from the QUMA AI multi-agent platform
+model:
+  preferred: llama-3.3-70b-versatile
