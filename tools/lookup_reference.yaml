@@ -1,6 +1,6 @@
-name: lookup_reference
+name: lookup-reference
 description: Retrieve a relevant passage from a curated STEM reference set for grounding an explanation. This is a schema only; runtimes provide the implementation.
-inputSchema:
+input_schema:
   type: object
   additionalProperties: false
   properties:
@@ -21,7 +21,7 @@ inputSchema:
       maximum: 5
       default: 3
   required: [query]
-outputSchema:
+output_schema:
   type: object
   additionalProperties: false
   properties:
@@ -43,6 +43,3 @@ outputSchema:
             maximum: 1
         required: [title, excerpt, source_id]
   required: [results]
-annotations:
-  readOnlyHint: true
-  openWorldHint: false

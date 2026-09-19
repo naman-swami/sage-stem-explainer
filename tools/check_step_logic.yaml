@@ -1,6 +1,6 @@
-name: check_step_logic
+name: check-step-logic
 description: Inspect a proposed STEM explanation for missing premises, invalid transitions, unit mismatches, or unsupported conclusions. This is a schema only; runtimes provide the implementation.
-inputSchema:
+input_schema:
   type: object
   additionalProperties: false
   properties:
@@ -29,7 +29,7 @@ inputSchema:
       type: string
       description: Optional target conclusion against which the steps are checked.
   required: [question, steps]
-outputSchema:
+output_schema:
   type: object
   additionalProperties: false
   properties:
@@ -57,6 +57,3 @@ outputSchema:
       items:
         type: string
   required: [status, findings]
-annotations:
-  readOnlyHint: true
-  openWorldHint: false

@@ -1,3 +1,8 @@
+---
+name: concept-breakdown
+description: Turn a STEM question into a sequence of understandable, checkable steps, from restating the goal through a plain-language intuition, a justified step chain, and a sanity check.
+---
+
 # Skill: Concept Breakdown
 
 ## Purpose
