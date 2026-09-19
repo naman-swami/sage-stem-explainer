@@ -1,0 +1,62 @@
+name: check_step_logic
+description: Inspect a proposed STEM explanation for missing premises, invalid transitions, unit mismatches, or unsupported conclusions. This is a schema only; runtimes provide the implementation.
+inputSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    question:
+      type: string
+      description: The learner's original question or task.
+      minLength: 1
+    steps:
+      type: array
+      description: Ordered reasoning steps to verify.
+      minItems: 1
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          id:
+            type: string
+          statement:
+            type: string
+          justification:
+            type: string
+          units:
+            type: string
+        required: [id, statement]
+    expected_conclusion:
+      type: string
+      description: Optional target conclusion against which the steps are checked.
+  required: [question, steps]
+outputSchema:
+  type: object
+  additionalProperties: false
+  properties:
+    status:
+      type: string
+      enum: [pass, needs_revision, insufficient_context]
+    findings:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          step_id:
+            type: string
+          severity:
+            type: string
+            enum: [info, warning, error]
+          message:
+            type: string
+          suggested_fix:
+            type: string
+        required: [severity, message]
+    checked_invariants:
+      type: array
+      items:
+        type: string
+  required: [status, findings]
+annotations:
+  readOnlyHint: true
+  openWorldHint: false

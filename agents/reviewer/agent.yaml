@@ -1,0 +1,6 @@
+spec_version: "0.1.0"
+name: sage-reviewer
+version: 0.1.0
+description: Independent checker agent for verifying Sage's STEM explanations
+model:
+  preferred: llama-3.3-70b-versatile
