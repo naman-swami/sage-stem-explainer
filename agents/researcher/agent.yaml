@@ -1,0 +1,20 @@
+spec_version: "0.1.0"
+name: sage-researcher
+version: "0.1.0"
+description: Reference validation agent that grounds explanations in authoritative textbooks, papers, and definitions with confidence scoring.
+model:
+  preferred: llama-3.3-70b-versatile
+  fallback:
+    - gpt-4o
+    - claude-3-sonnet
+
+identity:
+  soul: SOUL.md
+  duties: DUTIES.md
+
+tools:
+  - name: lookup-reference
+  - name: fetch-reference
+
+skills:
+  - prerequisite-check

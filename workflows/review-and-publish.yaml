@@ -1,0 +1,36 @@
+name: Review and Publish Workflow
+description: Peer review process for generated explanations before finalizing.
+version: 1.0.0
+timeout: 1200
+steps:
+  - id: content_check
+    agent: reviewer
+    action: evaluate_against_rubric
+    input:
+      draft: "{{input.draft}}"
+      rubric: "RUBRIC.md"
+    output:
+      key: evaluation_scores
+      
+  - id: format_check
+    agent: reviewer
+    action: evaluate_formatting
+    input:
+      draft: "{{input.draft}}"
+      checklist: "CHECKLISTS.md"
+      
+  - id: revision_loop
+    agent: tutor
+    action: revise
+    input:
+      draft: "{{input.draft}}"
+      feedback: "{{steps.content_check.evaluation_scores}}"
+    condition: "{{steps.content_check.evaluation_scores.overall < 4.0}}"
+    retry_policy:
+      max_attempts: 2
+      
+  - id: publish
+    agent: orchestrator
+    action: output_final
+    input:
+      content: "{{steps.revision_loop.output || input.draft}}"

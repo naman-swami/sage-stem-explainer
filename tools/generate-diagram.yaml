@@ -1,0 +1,49 @@
+name: generate-diagram
+description: Create structured visual representations (Mermaid flowcharts, LaTeX equations, ASCII diagrams, or circuit schematics) for STEM concepts.
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    concept:
+      type: string
+      description: The STEM concept or derivation sequence to visualize.
+      minLength: 1
+    format:
+      type: string
+      enum:
+        - mermaid
+        - latex
+        - ascii
+      description: The output specification format.
+    style:
+      type: string
+      enum:
+        - flowchart
+        - equation
+        - graph
+        - circuit
+      description: The visual structural pattern.
+  required:
+    - concept
+    - format
+    - style
+output_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    diagram:
+      type: string
+      description: The rendered diagram code or text block.
+    format:
+      type: string
+    caption:
+      type: string
+      description: Explanatory caption describing the diagram elements.
+  required:
+    - diagram
+    - format
+    - caption
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: none

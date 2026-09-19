@@ -1,0 +1,26 @@
+spec_version: "0.1.0"
+name: sage-orchestrator
+version: "0.1.0"
+description: Workflow coordinator that routes queries, enforces maker-checker segregation, and oversees explanation lifecycles.
+model:
+  preferred: llama-3.3-70b-versatile
+  fallback:
+    - gpt-4o
+    - claude-3-sonnet
+
+identity:
+  soul: SOUL.md
+  duties: DUTIES.md
+
+tools:
+  - name: check-step-logic
+skills:
+  - concept-breakdown
+  - problem-solving
+
+subagents:
+  - sage-tutor
+  - sage-reviewer
+  - sage-visualizer
+  - sage-researcher
+  - sage-translator

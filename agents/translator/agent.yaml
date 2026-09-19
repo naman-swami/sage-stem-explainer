@@ -1,0 +1,19 @@
+spec_version: "0.1.0"
+name: sage-translator
+version: "0.1.0"
+description: Bilingual translation agent facilitating English and Hindi explanations while preserving critical scientific and mathematical terms.
+model:
+  preferred: llama-3.3-70b-versatile
+  fallback:
+    - gpt-4o
+    - claude-3-sonnet
+
+identity:
+  soul: SOUL.md
+  duties: DUTIES.md
+
+tools:
+  - name: translate-concept
+
+skills:
+  - concept-breakdown

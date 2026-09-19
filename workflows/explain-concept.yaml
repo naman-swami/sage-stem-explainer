@@ -1,0 +1,40 @@
+name: Explain Concept Workflow
+description: Break down and explain a STEM concept comprehensively.
+version: 1.0.0
+timeout: 1800
+steps:
+  - id: breakdown
+    agent: orchestrator
+    skill: concept-breakdown
+    input:
+      concept: "{{input.concept}}"
+    output:
+      key: concept_parts
+      
+  - id: research_parts
+    agent: researcher
+    action: gather_info
+    input:
+      topics: "{{steps.breakdown.concept_parts}}"
+    output:
+      key: research_data
+      
+  - id: draft_explanation
+    agent: tutor
+    action: draft
+    input:
+      data: "{{steps.research_parts.research_data}}"
+      
+  - id: visualize
+    agent: visualizer
+    action: create_diagrams
+    input:
+      text: "{{steps.draft_explanation.output}}"
+      
+  - id: final_review
+    agent: reviewer
+    action: evaluate
+    input:
+      content: "{{steps.visualize.output}}"
+    error_handling:
+      fallback: "skip_review_if_timeout"

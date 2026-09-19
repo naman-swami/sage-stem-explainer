@@ -1,0 +1,59 @@
+name: translate-concept
+description: Bilingual concept translation between English and Hindi, strictly preserving scientific terminology and mathematical symbols.
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    text:
+      type: string
+      description: The STEM explanation text to translate.
+      minLength: 1
+    source_language:
+      type: string
+      enum:
+        - en
+        - hi
+      description: ISO code of source language.
+    target_language:
+      type: string
+      enum:
+        - en
+        - hi
+      description: ISO code of target language.
+    preserve_terms:
+      type: array
+      items:
+        type: string
+      description: Technical nomenclature that must remain untranslated or paired with English original.
+  required:
+    - text
+    - source_language
+    - target_language
+output_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    translated_text:
+      type: string
+    preserved_terms:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          original:
+            type: string
+          preserved:
+            type: string
+          context:
+            type: string
+        required:
+          - original
+          - preserved
+  required:
+    - translated_text
+    - preserved_terms
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: low

@@ -1,0 +1,41 @@
+name: Adaptive Tutoring Workflow
+description: A workflow to guide a learner through a concept dynamically adjusting difficulty.
+version: 1.0.0
+timeout: 3600
+steps:
+  - id: assess_baseline
+    agent: tutor
+    action: assess_understanding
+    input:
+      concept: "{{input.target_concept}}"
+      learner_id: "{{memory.learner_profile.user_id}}"
+    output:
+      key: baseline_score
+    error_handling:
+      retry_count: 3
+      fallback: "assume_beginner"
+      
+  - id: generate_lesson_plan
+    agent: orchestrator
+    action: create_plan
+    input:
+      concept: "{{input.target_concept}}"
+      baseline: "{{steps.assess_baseline.baseline_score}}"
+    output:
+      key: lesson_plan
+      
+  - id: deliver_content
+    agent: tutor
+    action: explain
+    input:
+      plan: "{{steps.generate_lesson_plan.lesson_plan}}"
+    timeout: 1200
+    
+  - id: evaluate_progress
+    agent: reviewer
+    action: check_understanding
+    input:
+      concept: "{{input.target_concept}}"
+    retry_policy:
+      max_attempts: 2
+      delay: 5s

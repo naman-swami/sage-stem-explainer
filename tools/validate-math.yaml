@@ -1,0 +1,43 @@
+name: validate-math
+description: Verify mathematical expressions and computations for algebraic correctness, arithmetic precision, and calculus validity.
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    expression:
+      type: string
+      description: The mathematical expression to validate.
+      minLength: 1
+    expected_result:
+      type: string
+      description: Optional expected result against which the computed evaluation is compared.
+    check_type:
+      type: string
+      enum:
+        - arithmetic
+        - algebraic
+        - calculus
+      description: The category of mathematical check to perform.
+  required:
+    - expression
+    - check_type
+output_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    is_valid:
+      type: boolean
+    computed_result:
+      type: string
+    error_details:
+      type: string
+    confidence:
+      type: number
+      minimum: 0
+      maximum: 1
+  required:
+    - is_valid
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: none

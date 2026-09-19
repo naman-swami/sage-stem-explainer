@@ -1,0 +1,24 @@
+name: pre-tool-validation
+description: Validates tool inputs before execution to ensure safety and contract compliance.
+trigger: before_tool_call
+actions:
+  - name: Validate Schema
+    type: json_schema_validation
+    config:
+      strict: true
+      on_failure: reject
+  
+  - name: Content Moderation
+    type: policy_check
+    config:
+      policies:
+        - no_prompt_injection
+        - no_system_command_execution
+      on_failure: reject
+      failure_message: "Input violates safety policies."
+  
+  - name: Log Invocation
+    type: audit_log
+    config:
+      level: info
+      include_params: true

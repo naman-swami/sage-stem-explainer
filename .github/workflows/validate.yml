@@ -1,0 +1,93 @@
+name: OpenGAP Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-yaml:
+    name: Validate YAML Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pyyaml
+        run: pip install pyyaml
+      - name: Validate YAML syntax
+        run: |
+          python -c "
+          import yaml
+          import glob
+          import sys
+          import os
+
+          errors = 0
+          for filename in glob.iglob('**/*.yaml', recursive=True):
+              try:
+                  with open(filename, 'r', encoding='utf-8') as f:
+                      yaml.safe_load(f)
+              except Exception as e:
+                  print(f'Error parsing {filename}: {e}')
+                  errors += 1
+          
+          if errors > 0:
+              sys.exit(1)
+          print('All YAML files are valid.')
+          "
+
+  validate-markdown:
+    name: Validate Markdown Content
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check essential markdown files exist and are not empty
+        run: |
+          required_files="SOUL.md RULES.md DUTIES.md EXPLAINABILITY.md AGENTS.md"
+          errors=0
+          for file in $required_files; do
+            if [ ! -f "$file" ]; then
+              echo "Missing required file: $file"
+              errors=$((errors + 1))
+            elif [ ! -s "$file" ]; then
+              echo "Required file is empty: $file"
+              errors=$((errors + 1))
+            fi
+          done
+          
+          if [ $errors -gt 0 ]; then
+            exit 1
+          fi
+          echo "All essential markdown files exist and have content."
+
+  validate-python:
+    name: Check Python Syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Python files
+        run: |
+          python -m compileall -q . || exit 1
+          echo "All Python files compiled successfully."
+
+  test-suite:
+    name: Run Pytest Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test dependencies
+        run: pip install -r tests/requirements.txt
+      - name: Run Pytest
+        run: pytest tests/ -v

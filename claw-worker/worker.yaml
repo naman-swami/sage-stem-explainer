@@ -1,0 +1,39 @@
+apiVersion: opengap.network/v0.1.0
+kind: ClawWorker
+metadata:
+  name: sage-stem-domain-worker
+  version: 1.0.0
+  description: Domain worker for Sage STEM Explainer, handling concept breakdowns and math/unit validation.
+spec:
+  targetDomain: "Education / STEM"
+  executionContracts:
+    - name: ExplainConcept
+      description: Generate a step-by-step STEM concept explanation
+      inputs:
+        - name: concept
+          type: string
+        - name: audience_level
+          type: string
+      outputs:
+        - name: explanation
+          type: object
+  memoryBounds:
+    maxMemoryMB: 1024
+    maxContextTokens: 32000
+  toolAuthorizations:
+    - name: MathValidator
+      description: Validates mathematical expressions
+      type: internal
+    - name: UnitConverter
+      description: Converts and checks physical units
+      type: internal
+  securityConstraints:
+    networkAccess: false
+    fileSystemAccess:
+      read:
+        - /tmp/workspace
+      write:
+        - /tmp/workspace
+  coordination:
+    maker: sage
+    checker: reviewer

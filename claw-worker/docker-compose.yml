@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  sage-worker:
+    build: .
+    container_name: sage-stem-worker
+    command: ["--health"]
+    volumes:
+      - ./data:/app/data
+    environment:
+      - WORKER_ENV=development

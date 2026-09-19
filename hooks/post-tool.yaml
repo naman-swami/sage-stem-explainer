@@ -1,0 +1,24 @@
+name: post-tool-validation
+description: Validates tool outputs and ensures they meet quality and schema standards.
+trigger: after_tool_call
+actions:
+  - name: Validate Output Schema
+    type: json_schema_validation
+    config:
+      strict: true
+      on_failure: alert
+  
+  - name: Confidence Threshold Check
+    type: evaluate
+    config:
+      condition: "output.confidence < 0.7"
+      on_true: 
+        action: warn
+        message: "Tool output confidence is low, consider requesting human review."
+  
+  - name: Log Result
+    type: audit_log
+    config:
+      level: info
+      include_result: false  # Avoid logging massive outputs
+      include_metrics: true

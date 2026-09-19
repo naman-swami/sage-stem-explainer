@@ -1,0 +1,28 @@
+name: global-error-handler
+description: Standardized error handling for tool failures and unexpected states.
+trigger: on_error
+actions:
+  - name: Log Error Context
+    type: audit_log
+    config:
+      level: error
+      include_stacktrace: true
+      include_context: true
+
+  - name: Attempt Graceful Degradation
+    type: fallback
+    config:
+      strategy: use_cached_result
+      max_retries: 2
+      retry_delay_ms: 1000
+
+  - name: Notify Orchestrator
+    type: system_event
+    config:
+      event_type: agent_error
+      priority: high
+
+  - name: Format User Message
+    type: transform
+    config:
+      template: "I encountered an issue while processing your request: {{error.message}}. I will try an alternative approach."

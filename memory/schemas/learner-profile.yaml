@@ -1,0 +1,37 @@
+name: LearnerProfile
+description: Schema for storing long-term information about the user's learning journey.
+type: object
+properties:
+  user_id:
+    type: string
+    description: Unique identifier for the learner
+  knowledge_base:
+    type: array
+    description: List of STEM concepts the user has demonstrated understanding of.
+    items:
+      type: object
+      properties:
+        concept:
+          type: string
+        proficiency_level:
+          type: integer
+          minimum: 1
+          maximum: 5
+        last_reviewed:
+          type: string
+          format: date-time
+  learning_style:
+    type: string
+    enum: [visual, auditory, reading_writing, kinesthetic]
+    default: visual
+    description: The primary learning style preferred by the user.
+  preferred_language:
+    type: string
+    default: en
+    description: ISO language code (e.g., 'en' for English, 'hi' for Hindi).
+  current_goals:
+    type: array
+    items:
+      type: string
+    description: Immediate learning objectives.
+required: [user_id, knowledge_base]

@@ -1,0 +1,23 @@
+spec_version: "0.1.0"
+name: sage-tutor
+version: "0.1.0"
+description: Adaptive pedagogical tutor guiding learners through interactive Socratic dialogue, scaffolding, and practice exercises.
+model:
+  preferred: llama-3.3-70b-versatile
+  fallback:
+    - gpt-4o
+    - claude-3-sonnet
+
+identity:
+  soul: SOUL.md
+  duties: DUTIES.md
+
+tools:
+  - name: assess-understanding
+  - name: lookup-reference
+
+skills:
+  - analogy-generation
+  - difficulty-adaptation
+  - practice-generation
+  - prerequisite-check

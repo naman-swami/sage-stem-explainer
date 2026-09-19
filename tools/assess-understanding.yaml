@@ -1,0 +1,54 @@
+name: assess-understanding
+description: Formulate targeted conceptual questions and checks to evaluate learner comprehension of an explained STEM concept.
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    concept:
+      type: string
+      description: The core STEM concept being assessed.
+      minLength: 1
+    explanation_given:
+      type: string
+      description: The prior explanation text provided to the learner.
+    difficulty:
+      type: string
+      enum:
+        - basic
+        - intermediate
+        - advanced
+      description: The assessment difficulty target.
+  required:
+    - concept
+    - explanation_given
+    - difficulty
+output_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    questions:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          question:
+            type: string
+          expected_answer:
+            type: string
+          hints:
+            type: array
+            items:
+              type: string
+        required:
+          - question
+          - expected_answer
+    assessment_type:
+      type: string
+  required:
+    - questions
+    - assessment_type
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: none

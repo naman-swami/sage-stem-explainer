@@ -1,0 +1,18 @@
+storage: git-native
+retention_policy: per-learner
+max_sessions: 100
+merge_strategy: append
+session_timeout_minutes: 60
+auto_save_interval_minutes: 5
+
+paths:
+  profiles: ".opengap/memory/profiles"
+  sessions: ".opengap/memory/sessions"
+  knowledge_graph: ".opengap/memory/knowledge_graph.json"
+
+vector_store:
+  enabled: true
+  provider: local
+  embedding_model: all-MiniLM-L6-v2
+  chunk_size: 500
+  overlap: 50

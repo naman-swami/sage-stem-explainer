@@ -1,6 +1,24 @@
 spec_version: "0.1.0"
 name: sage-reviewer
-version: 0.1.0
-description: Independent checker agent for verifying Sage's STEM explanations
+version: "0.1.0"
+description: Independent checker agent for verifying STEM explanations, mathematical derivations, and pedagogical clarity.
 model:
   preferred: llama-3.3-70b-versatile
+  fallback:
+    - gpt-4o
+    - claude-3-sonnet
+
+identity:
+  soul: SOUL.md
+  duties: DUTIES.md
+
+rubric: RUBRIC.md
+checklists: CHECKLISTS.md
+
+tools:
+  - name: check-step-logic
+  - name: validate-math
+  - name: lookup-reference
+
+skills:
+  - concept-breakdown

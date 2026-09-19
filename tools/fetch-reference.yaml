@@ -1,0 +1,67 @@
+name: fetch-reference
+description: Retrieve verified reference excerpts, authoritative formulas, and definitions from peer-reviewed textbooks and curated STEM corpora.
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    query:
+      type: string
+      description: The technical theorem, concept, formula, or law to search.
+      minLength: 1
+    subject:
+      type: string
+      description: Specific STEM discipline (e.g., physics, chemistry, mathematics, computer_science, biology).
+    level:
+      type: string
+      enum:
+        - school
+        - undergraduate
+        - graduate
+        - general
+      description: Pedagogical target level.
+      default: general
+    source_type:
+      type: string
+      enum:
+        - textbook
+        - paper
+        - definition
+      description: Format of canonical grounding reference.
+  required:
+    - query
+    - subject
+    - level
+    - source_type
+output_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    references:
+      type: array
+      items:
+        type: object
+        additionalProperties: false
+        properties:
+          title:
+            type: string
+          excerpt:
+            type: string
+          source:
+            type: string
+          confidence:
+            type: number
+            minimum: 0
+            maximum: 1
+          citation_format:
+            type: string
+        required:
+          - title
+          - excerpt
+          - source
+          - confidence
+  required:
+    - references
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: low
