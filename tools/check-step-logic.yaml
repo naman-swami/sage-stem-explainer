@@ -57,3 +57,7 @@ output_schema:
       items:
         type: string
   required: [status, findings]
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: none

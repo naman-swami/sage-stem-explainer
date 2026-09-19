@@ -43,3 +43,7 @@ output_schema:
             maximum: 1
         required: [title, excerpt, source_id]
   required: [results]
+annotations:
+  requires_confirmation: false
+  read_only: true
+  cost: low
