@@ -255,7 +255,7 @@ This repository comprehensively covers all tracks of the **HiDevs Agent Passport
 
 | Track | Implementation in this Repository | Verification Status |
 |---|---|---|
-| **Base Passport** | 6 Sub-agents, 7 Skills, 7 Tools, 5 Exports, CI/CD | ✅ Maxed (4/4 Visas, 3/3 Checkpoints) |
+| **Base Passport** | 6 Sub-agents, 7 Skills, 7 Tools, 5 Exports, CI/CD | ✅ Maxed (15/15 Visas, 3/3 Checkpoints, 1,675 Points) |
 | **Track 01: Custom Claw Workers** | Containerized `claw-worker/` with worker daemon & launch contracts | ✅ Tested & Healthy |
 | **Track 02: Agent Migration** | Automated CLI converters for CrewAI & LangChain (`migration/`) | ✅ Tested (Passes OpenGAP validation) |
 | **Track 03: OSS Contribution** | Pluggable Lyzr and LangGraph export adapters (`adapters/`) | ✅ Tested & Generates artifacts |
